@@ -1,0 +1,39 @@
+{% extends 'base_template.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Agregar Modelo</h2>
+    <form method="POST" action="{{ url_for('agregar_modelo') }}">
+        {{ form.hidden_tag() }}
+
+        <div class="form-group">
+            {{ form.nombre.label(class="form-label") }}
+            {{ form.nombre(class="form-control") }}
+            {% for error in form.nombre.errors %}
+            <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.fabricante_id.label(class="form-label") }}
+            {{ form.fabricante_id(class="form-control") }}
+            {% for error in form.fabricante_id.errors %}
+            <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.marca_id.label(class="form-label") }}
+            {{ form.marca_id(class="form-control") }}
+            {% for error in form.marca_id.errors %}
+            <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.submit(class="btn btn-primary") }}
+            <a href="{{ url_for('modelos') }}" class="btn btn-secondary ml-2">Volver</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'base_template.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Modificar Accesorio</h2>
+    <form method="POST" action="{{ url_for('modificar_accesorio', id=accesorio.id) }}">
+        <!-- Token CSRF -->
+        {{ form.hidden_tag() }}
+        
+        <div class="form-group">
+            {{ form.modelo_id.label(class="form-label") }}
+            {{ form.modelo_id(class="form-control") }}
+            {% for error in form.modelo_id.errors %}
+            <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.cargador.label(class="form-label") }}
+            {{ form.cargador(class="form-control") }}
+            {% for error in form.cargador.errors %}
+            <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.auriculares.label(class="form-label") }}
+            {{ form.auriculares(class="form-control") }}
+            {% for error in form.auriculares.errors %}
+            <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.chip.label(class="form-label") }}
+            {{ form.chip(class="form-control") }}
+            {% for error in form.chip.errors %}
+            <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.funda.label(class="form-label") }}
+            {{ form.funda(class="form-control") }}
+            {% for error in form.funda.errors %}
+            <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.submit(class="btn btn-primary") }}
+            <a href="{{ url_for('accesorios') }}" class="btn btn-secondary ml-2">Volver</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

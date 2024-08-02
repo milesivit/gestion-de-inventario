@@ -1,0 +1,42 @@
+{% extends 'base_template.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h4 class="mb-4">Tabla de Accesorios</h4>
+    <div class="mb-3">
+        <a href="{{ url_for('agregar_accesorio') }}" class="btn btn-danger">Crear Accesorio</a>
+        <a href="{{ url_for('eliminar_accesorios') }}" class="btn btn-danger">Eliminar Accesorio</a>
+    </div>
+    
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Modelo</th>
+                    <th>Cargador</th>
+                    <th>Auriculares</th>
+                    <th>Chip</th>
+                    <th>Funda</th>
+                    <th></th> 
+                </tr>
+            </thead>
+            <tbody>
+                {% for accesorio in accesorios %}
+                    <tr>
+                        <td>{{ accesorio.id }}</td>
+                        <td>{{ accesorio.modelo.nombre }}</td>
+                        <td>{{ 'Sí' if accesorio.cargador else 'No' }}</td>
+                        <td>{{ 'Sí' if accesorio.auriculares else 'No' }}</td>
+                        <td>{{ 'Sí' if accesorio.chip else 'No' }}</td>
+                        <td>{{ 'Sí' if accesorio.funda else 'No' }}</td>
+                        <td>
+                            <a href="{{ url_for('modificar_accesorio', id=accesorio.id) }}" class="btn btn-primary">Modificar</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

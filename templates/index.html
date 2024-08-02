@@ -1,0 +1,41 @@
+{% extends 'base_template.html' %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="card custom-card">
+            <div class="card-body">
+                <h2 class="card-title">Registros de <span class="text-warning">phoneWorld</span></h2> 
+                <p class="card-text">Puedes:</p>
+                <ul>
+                    <li><span class="text-warning">Ver</span> registros.</li>
+                    <li><span class="text-warning">Crear</span> registros.</li>
+                    <li><span class="text-warning">Modificar</span> registros.</li>
+                    <li><span class="text-warning">Eliminar</span> registros.</li>
+                    <li><span class="text-warning">Restaurar</span> registros.</li>
+                    <li><span class="text-warning">Manejo</span> de stock (un proveedor trae un producto al local y si un cliente lo compra baja su cantidad).</li>
+                </ul>
+                <p class="card-text">Utilice:</p>
+                <ul>
+                    <li><span class="text-warning">Flask-WTF</span></li>
+                    <li><span class="text-warning">Flask</span></li>
+                    <li><span class="text-warning">Flask-SQLAlchemy</span></li>
+                    <li><span class="text-warning">Flask-Migrate</span></li>
+                    <li><span class="text-warning">WTForms</span></li>
+                </ul>
+            </div>
+            <div class="card-footer text-center">
+                &copy; Milena Sivit
+            </div>
+        </div>
+    </div>
+
+
+<style> /*esto esta hecho con css porque no me gusta cómo queda con bootstrap*/
+    .custom-card {
+        background-color: #332f2f; /* Color de fondo personalizado */
+        color: white; /* Color de texto */
+        border-radius: 8px; /* Bordes redondeados */
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Sombra sutil */
+    }
+</style>
+{% endblock %}

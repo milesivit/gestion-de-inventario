@@ -1,0 +1,58 @@
+{% extends 'base_template.html' %}
+
+{% block content %}
+<div class="container">
+    <h3>Eliminar Equipo</h3>
+
+    <!-- Mostrar errores del formulario si existen -->
+    {% if form.errors %}
+        <div class="alert alert-danger">
+            <ul>
+                {% for field, errors in form.errors.items() %}
+                    {% for error in errors %}
+                        <li>{{ field }}: {{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Categoría</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Precio Dólar</th>
+                <th>Batería en horas</th>
+                <th>Cargador</th>
+                <th>Auriculares</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for equipo in equipos %}
+            <tr>
+                <td>{{ equipo.id }}</td>
+                <td>{{ equipo.categoria.nombre }}</td>
+                <td>{{ equipo.marca.nombre }}</td>
+                <td>{{ equipo.modelo.nombre }}</td>
+                <td>{{ equipo.caracteristica.precio_lista }}</td>
+                <td>{{ equipo.caracteristica.capacidad_bateria }}</td>
+                <td>{{ 'Sí' if equipo.accesorio.cargador else 'No' }}</td>
+                <td>{{ 'Sí' if equipo.accesorio.auriculares else 'No' }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('eliminar_equipos') }}" style="display:inline;">
+                        {{ form.hidden_tag() }}
+                        <input type="hidden" name="equipo_id" value="{{ equipo.id }}">
+                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ url_for('equipos') }}" class="btn btn-secondary">Volver</a>
+</div>
+{% endblock %}

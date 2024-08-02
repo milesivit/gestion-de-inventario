@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>{% block title %}{% endblock %}</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+  <nav class="navbar navbar-expand navbar-custom">
+    <div class="nav navbar-nav">
+      <a class="nav-item nav-link active" href="/">Inicio</a>
+      <a class="nav-item nav-link" href="/equipo">Equipos</a>
+      <a class="nav-item nav-link" href="/categoria">Categorías</a>
+      <a class="nav-item nav-link" href="/marcas">Marcas</a>
+      <a class="nav-item nav-link" href="/modelos">Modelos</a>
+      <a class="nav-item nav-link" href="/fabricantes">Fabricantes</a>
+      <a class="nav-item nav-link" href="/caracteristicas">Características</a>
+      <a class="nav-item nav-link" href="/accesorios">Accesorios</a>
+      <a class="nav-item nav-link" href="/proveedores">Proveedores</a>
+      <a class="nav-item nav-link" href="/inventario">Inventario</a>
+      <a class="nav-item nav-link" href="/cliente">Clientes</a>
+      <a class="nav-item nav-link restaurar-link" href="/restaurar">Papelera</a>
+    </div>
+  </nav>
+
+  <style>
+    /* Estilo personalizado para el navbar */
+    .navbar-custom {
+      background-color: rgb(53, 49, 49); /* Color de fondo personalizado */
+    }
+
+    .navbar-custom .nav-link {
+      color: wheat; /* Color del texto */
+    }
+
+    .navbar-custom .nav-link:hover {
+      color: orange; /* Color del texto al pasar el ratón */
+    }
+
+    .navbar-custom .nav-item.active .nav-link {
+      color: white; /* Color del texto del enlace activo */
+    }
+
+    /* Estilo único para el enlace Restaurar */
+    .restaurar-link {
+      background-color: #ac0a0a; /* Color de fondo del enlace Restaurar */
+      color: white; /* Color del texto */
+      font-weight: bold; /* Fuente en negrita */
+      border-radius: 0.25rem; /* Bordes redondeados */
+      padding: 0.5rem 1rem; /* Espaciado interno */
+    }
+
+    .restaurar-link:hover {
+      background-color: #c73333; /* Color de fondo al pasar el ratón */
+      color: #ffffff; /* Color del texto al pasar el ratón */
+    }
+  </style>
+
+  {% block content %}{% endblock %}
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KV" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-9g3Zr12le5aH6P7LqP6bGep2eZ6N0CmB9O6nYhltt7O3lM9fknlfv8z9zptjG5B5" crossorigin="anonymous"></script>
+</body>
+</html>

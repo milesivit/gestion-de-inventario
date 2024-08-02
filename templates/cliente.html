@@ -1,0 +1,41 @@
+{% extends 'base_template.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h4 class="mb-4">Tabla de Clientes</h4>
+    <div class="mb-3">
+        <a href="{{ url_for('agregar_cliente') }}" class="btn btn-danger">Crear Cliente</a>
+        <a href="{{ url_for('eliminar_cliente') }}" class="btn btn-danger">Eliminar Cliente</a>
+    </div>
+    <h5 style="font-size: 0.8rem;">A medida que se vaya registrando la compra de un cliente la cantidad de stock bajará.</h5>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>DNI</th>
+                    <th>Producto comprado</th>
+                    <th>Fecha de compra</th>
+                    <th></th> 
+                </tr>
+            </thead>
+            <tbody>
+                {% for cliente in clientes %}
+                    <tr>
+                        <td>{{ cliente.id }}</td>
+                        <td>{{ cliente.nombre }}</td>
+                        <td>{{ cliente.dni }}</td>
+                        <td>{{ cliente.inventario.nombre }}</td>
+                        <td>{{ cliente.fecha }}</td>
+                        <td>
+                            <a href="{{ url_for('modificar_cliente', id=cliente.id) }}" class="btn btn-primary">Modificar</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

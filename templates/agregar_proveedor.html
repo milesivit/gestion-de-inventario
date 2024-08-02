@@ -1,0 +1,50 @@
+{% extends 'base_template.html' %}
+
+{% block content %}
+
+<div class="container">
+    <h2>Agregar Proveedor</h2>
+    <form method="POST" action="{{ url_for('agregar_proveedor') }}">
+        <!-- Token CSRF -->
+        {{ form.hidden_tag() }}
+        
+        <div class="form-group">
+            {{ form.nombre.label(class="form-label") }}
+            {{ form.nombre(class="form-control") }}
+            {% for error in form.nombre.errors %}
+            <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.telefono.label(class="form-label") }}
+            {{ form.telefono(class="form-control") }}
+            {% for error in form.telefono.errors %}
+            <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.direccion.label(class="form-label") }}
+            {{ form.direccion(class="form-control") }}
+            {% for error in form.direccion.errors %}
+            <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.correo_electronico.label(class="form-label") }}
+            {{ form.correo_electronico(class="form-control") }}
+            {% for error in form.correo_electronico.errors %}
+            <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.submit(class="btn btn-primary") }}
+            <a href="{{ url_for('proveedores') }}" class="btn btn-secondary ml-2">Volver</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

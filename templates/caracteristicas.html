@@ -1,0 +1,50 @@
+{% extends 'base_template.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h4 class="mb-4">Tabla de Características</h4>
+    <div class="mb-3">
+        <a href="{{ url_for('agregar_caracteristicas') }}" class="btn btn-danger">Crear Característica</a>
+        <a href="{{ url_for('eliminar_caracteristicas') }}" class="btn btn-danger">Eliminar Característica</a>
+    </div>
+    
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Modelo</th>
+                    <th>Peso en gramos</th>
+                    <th>Resolución Pantalla</th>
+                    <th>Capacidad Batería en horas</th>
+                    <th>Sistema Operativo</th>
+                    <th>Precio Dólar</th>
+                    <th>Cámara</th>
+                    <th>Descripción</th>
+                    <th>Lanzamiento</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for caracteristica in caracteristicas %}
+                    <tr>
+                        <td>{{ caracteristica.id }}</td>
+                        <td>{{ caracteristica.modelo.nombre }}</td>
+                        <td>{{ caracteristica.peso }}</td>
+                        <td>{{ caracteristica.resolucion_pantalla }}</td>
+                        <td>{{ caracteristica.capacidad_bateria }}</td>
+                        <td>{{ caracteristica.sistema_operativo }}</td>
+                        <td>{{ caracteristica.precio_lista }}</td>
+                        <td>{{ caracteristica.camara }}</td>
+                        <td>{{ caracteristica.descripcion }}</td>
+                        <td>{{ caracteristica.lanzamiento }}</td>
+                        <td>
+                            <a href="{{ url_for('modificar_caracteristicas', id=caracteristica.id) }}" class="btn btn-primary">Modificar</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

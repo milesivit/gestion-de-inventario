@@ -1,0 +1,251 @@
+{% extends 'base_template.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h3 class="mb-4">Restaurar Elementos</h3>
+
+    <!-- Mostrar errores del formulario si existen -->
+    {% if form.errors %}
+        <div class="alert alert-danger">
+            <ul>
+                {% for field, errors in form.errors.items() %}
+                    {% for error in errors %}
+                        <li>{{ field }}: {{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <!-- Marcas Inactivas -->
+    <h4 class="mt-4">Marcas Inactivas</h4>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for marca in marcas %}
+            <tr>
+                <td>{{ marca.id }}</td>
+                <td>{{ marca.nombre }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('restaurar') }}" style="display:inline;">
+                        {{ form.hidden_tag() }}
+                        <input type="hidden" name="marca_id" value="{{ marca.id }}">
+                        <button type="submit" class="btn btn-success btn-sm">Restaurar Marca</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Categorías Inactivas -->
+    <h4 class="mt-4">Categorías Inactivas</h4>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for categoria in categorias %}
+            <tr>
+                <td>{{ categoria.id }}</td>
+                <td>{{ categoria.nombre }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('restaurar') }}" style="display:inline;">
+                        {{ form.hidden_tag() }}
+                        <input type="hidden" name="categoria_id" value="{{ categoria.id }}">
+                        <button type="submit" class="btn btn-success btn-sm">Restaurar Categoría</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+    
+
+    <!-- Modelos Inactivos -->
+    <h4 class="mt-4">Modelos Inactivos</h4>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for modelo in modelos %}
+            <tr>
+                <td>{{ modelo.id }}</td>
+                <td>{{ modelo.nombre }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('restaurar') }}" style="display:inline;">
+                        {{ form.hidden_tag() }}
+                        <input type="hidden" name="modelo_id" value="{{ modelo.id }}">
+                        <button type="submit" class="btn btn-success btn-sm">Restaurar Modelo</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Fabricantes Inactivos -->
+    <h4 class="mt-4">Fabricantes Inactivos</h4>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for fabricante in fabricantes %}
+            <tr>
+                <td>{{ fabricante.id }}</td>
+                <td>{{ fabricante.nombre }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('restaurar') }}" style="display:inline;">
+                        {{ form.hidden_tag() }}
+                        <input type="hidden" name="fabricante_id" value="{{ fabricante.id }}">
+                        <button type="submit" class="btn btn-success btn-sm">Restaurar Fabricante</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- proveedores Inactivos -->
+    <h4 class="mt-4">Proveedores Inactivos</h4>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for proveedor in proveedores %}
+            <tr>
+                <td>{{ proveedor.id }}</td>
+                <td>{{ proveedor.nombre }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('restaurar') }}" style="display:inline;">
+                        {{ form.hidden_tag() }}
+                        <input type="hidden" name="proveedor_id" value="{{ proveedor.id }}">
+                        <button type="submit" class="btn btn-success btn-sm">Restaurar Proveedor</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+        <!-- Características Inactivas -->
+    <h4 class="mt-4">Características Inactivas</h4>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Descripción</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for caracteristica in caracteristicas %}
+            <tr>
+                <td>{{ caracteristica.id }}</td>
+                <td>{{ caracteristica.descripcion }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('restaurar') }}" style="display:inline;">
+                        {{ form.hidden_tag() }}
+                        <input type="hidden" name="caracteristica_id" value="{{ caracteristica.id }}">
+                        <button type="submit" class="btn btn-success btn-sm">Restaurar Característica</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+        <!-- Accesorios Inactivos -->
+    <h4 class="mt-4">Accesorios Inactivos</h4>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>     
+            {% for accesorio in accesorios %}
+            <tr>
+                <td>{{ accesorio.id }}</td>
+                <td>{{ accesorio.modelo.nombre }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('restaurar') }}" style="display:inline;">
+                        {{ form.hidden_tag() }}
+                        <input type="hidden" name="accesorio_id" value="{{ accesorio.id }}">
+                        <button type="submit" class="btn btn-success btn-sm">Restaurar Accesorio</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Equipos Inactivos -->
+    <h4 class="mt-4">Equipos Inactivos</h4>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Características</th>
+                <th>Accesorios</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for equipo in equipos %}
+            <tr>
+                <td>{{ equipo.id }}</td>
+                <td>{{ equipo.nombre }}</td>
+                <td>{{ equipo.marca.nombre }}</td>
+                <td>{{ equipo.modelo.nombre }}</td>
+                <td>{{ equipo.caracteristica.descripcion }}</td>
+                <td>{{ equipo.accesorio.descripcion }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('restaurar') }}" style="display:inline;">
+                        {{ form.hidden_tag() }}
+                        <input type="hidden" name="equipo_id" value="{{ equipo.id }}">
+                        <button type="submit" class="btn btn-success btn-sm">Restaurar Equipo</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+    <!-- Volver -->
+    <a href="{{ url_for('index') }}" class="btn btn-secondary mt-3">Volver</a>
+</div>
+{% endblock %}

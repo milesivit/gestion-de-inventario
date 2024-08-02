@@ -1,0 +1,38 @@
+{% extends 'base_template.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Agregar Cliente</h2>
+    <form method="POST" action="{{ url_for('agregar_cliente') }}">
+        <div class="form-group">
+            <label for="nombre">Nombre y apellido</label>
+            <input type="text" name="nombre" id="nombre" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label for="dni">DNI</label>
+            <input type="text" name="dni" id="dni" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label for="inventario_id">Producto</label>
+            <select name="inventario_id" id="inventario_id" class="form-control" required>
+                <option value="">Seleccione un producto</option>
+                {% for inventario in inventarios %}
+                    <option value="{{ inventario.id }}">{{ inventario.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="fecha">Fecha de compra</label>
+            <input type="date" name="fecha" id="fecha" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Agregar</button>
+            <a href="{{ url_for('cliente') }}" class="btn btn-secondary ml-2">Volver</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

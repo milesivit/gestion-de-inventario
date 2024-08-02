@@ -1,0 +1,49 @@
+{% extends 'base_template.html' %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h2 class="mb-4">Modificar Proveedor</h2>
+    <form method="POST" action="{{ url_for('modificar_proveedor', id=proveedor.id) }}" class="ml-5">
+      <!-- Token CSRF  -->
+      {{ form.hidden_tag() }} 
+      
+      <div class="form-group"> <!-- Envuelve cada campo del formulario -->
+        {{ form.nombre.label(class="form-label") }}<br><!-- Muestra la etiqueta del campo -->
+        {{ form.nombre(class="form-control") }}<br><!-- Muestra el campo de entrada -->
+        {% for error in form.nombre.errors %}
+        <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+      </div>
+      
+      <div class="form-group">
+        {{ form.telefono.label(class="form-label") }}<br>
+        {{ form.telefono(class="form-control") }}<br>
+        {% for error in form.telefono.errors %}
+        <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+      </div>
+      
+      <div class="form-group">
+        {{ form.direccion.label(class="form-label") }}<br>
+        {{ form.direccion(class="form-control") }}<br>
+        {% for error in form.direccion.errors %}
+        <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+      </div>
+      
+      <div class="form-group">
+        {{ form.correo_electronico.label(class="form-label") }}<br>
+        {{ form.correo_electronico(class="form-control") }}<br>
+        {% for error in form.correo_electronico.errors %}
+        <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+      </div>
+      
+      <div>
+        {{ form.submit(class="btn btn-primary") }} <!-- Renderiza el botón de envío del formulario -->
+      </div>
+      
+      <a href="{{ url_for('proveedores') }}" class="btn btn-secondary mt-3">Volver</a> <!-- Botón para volver a la lista de proveedores -->
+    </form>
+  </div>
+{% endblock %}

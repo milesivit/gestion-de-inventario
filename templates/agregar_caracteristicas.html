@@ -1,0 +1,87 @@
+{% extends 'base_template.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Agregar Característica</h2>
+    <form method="POST" action="{{ url_for('agregar_caracteristicas') }}">
+        {{ form.hidden_tag() }}
+
+        <div class="form-group">
+            {{ form.modelo_id.label(class="form-label") }}
+            {{ form.modelo_id(class="form-control") }}
+            {% for error in form.modelo_id.errors %}
+            <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.peso.label(class="form-label") }}
+            {{ form.peso(class="form-control") }}
+            {% for error in form.peso.errors %}
+            <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.resolucion_pantalla.label(class="form-label") }}
+            {{ form.resolucion_pantalla(class="form-control") }}
+            {% for error in form.resolucion_pantalla.errors %}
+            <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.capacidad_bateria.label(class="form-label") }}
+            {{ form.capacidad_bateria(class="form-control") }}
+            {% for error in form.capacidad_bateria.errors %}
+            <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.sistema_operativo.label(class="form-label") }}
+            {{ form.sistema_operativo(class="form-control") }}
+            {% for error in form.sistema_operativo.errors %}
+            <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.precio_lista.label(class="form-label") }}
+            {{ form.precio_lista(class="form-control") }}
+            {% for error in form.precio_lista.errors %}
+            <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.camara.label(class="form-label") }}
+            {{ form.camara(class="form-control") }}
+            {% for error in form.camara.errors %}
+            <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.descripcion.label(class="form-label") }}
+            {{ form.descripcion(class="form-control") }}
+            {% for error in form.descripcion.errors %}
+            <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.lanzamiento.label(class="form-label") }}
+            {{ form.lanzamiento(class="form-control") }}
+            {% for error in form.lanzamiento.errors %}
+            <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.submit(class="btn btn-primary") }}
+            <a href="{{ url_for('caracteristicas') }}" class="btn btn-secondary ml-2">Volver</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'base_template.html' %}
+
+{% block content %}
+<div class="container">
+    <h3>Eliminar Accesorio</h3>
+
+    <!-- Mostrar errores del formulario si existen -->
+    {% if form.errors %}
+        <div class="alert alert-danger">
+            <ul>
+                {% for field, errors in form.errors.items() %}
+                    {% for error in errors %}
+                        <li>{{ field }}: {{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Modelo</th>
+                <th>Cargador</th>
+                <th>Auriculares</th>
+                <th>Chip</th>
+                <th>Funda</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for accesorio in accesorios %}
+            <tr>
+                <td>{{ accesorio.id }}</td>
+                <td>{{ accesorio.modelo.nombre }}</td>
+                <td>{{ 'Sí' if accesorio.cargador else 'No' }}</td>
+                <td>{{ 'Sí' if accesorio.auriculares else 'No' }}</td>
+                <td>{{ 'Sí' if accesorio.chip else 'No' }}</td>
+                <td>{{ 'Sí' if accesorio.funda else 'No' }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('eliminar_accesorios') }}" style="display:inline;">
+                        {{ form.hidden_tag() }}
+                        <input type="hidden" name="accesorio_id" value="{{ accesorio.id }}">
+                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ url_for('accesorios') }}" class="btn btn-secondary">Volver</a>
+</div>
+{% endblock %}

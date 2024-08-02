@@ -1,0 +1,45 @@
+{% extends 'base_template.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h4 class="mb-4">Tabla de Equipos</h4>
+    <div class="mb-3">
+        <a href="{{ url_for('agregar_equipos') }}" class="btn btn-danger">Crear Equipo</a>
+        <a href="{{ url_for('eliminar_equipos') }}" class="btn btn-danger">Eliminar Equipo</a>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Categoria</th>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>Precio Dólar</th>
+                    <th>Batería en horas</th>
+                    <th>Cargador</th>
+                    <th>Auriculares</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for equipo in equipos %}
+                    <tr>
+                        <td>{{ equipo.id }}</td>
+                        <td>{{ equipo.categoria.nombre }}</td>
+                        <td>{{ equipo.marca.nombre }}</td>
+                        <td>{{ equipo.modelo.nombre }}</td>
+                        <td>{{ equipo.caracteristica.precio_lista }}</td>
+                        <td>{{ equipo.caracteristica.capacidad_bateria }}</td>
+                        <td>{{ 'Sí' if equipo.accesorio.cargador else 'No' }}</td>
+                        <td>{{ 'Sí' if equipo.accesorio.auriculares else 'No' }}</td>
+                        <td>
+                            <a href="{{ url_for('modificar_equipos', id=equipo.id) }}" class="btn btn-primary">Modificar</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

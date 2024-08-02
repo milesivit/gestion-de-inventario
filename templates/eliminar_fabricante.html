@@ -1,0 +1,48 @@
+{% extends 'base_template.html' %}
+
+{% block content %}
+<div class="container">
+    <h3>Eliminar Fabricante</h3>
+
+    <!-- Mostrar errores del formulario si existen -->
+    {% if form.errors %}
+        <div class="alert alert-danger">
+            <ul>
+                {% for field, errors in form.errors.items() %}
+                    {% for error in errors %}
+                        <li>{{ field }}: {{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>País</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for fabricante in fabricantes %}
+            <tr>
+                <td>{{ fabricante.id }}</td>
+                <td>{{ fabricante.nombre }}</td>
+                <td>{{ fabricante.pais_origen }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('eliminar_fabricante') }}" style="display:inline;">
+                        {{ form.hidden_tag() }}
+                        <input type="hidden" name="fabricante_id" value="{{ fabricante.id }}">
+                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ url_for('fabricantes') }}" class="btn btn-secondary">Volver</a>
+</div>
+{% endblock %}

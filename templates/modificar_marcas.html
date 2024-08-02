@@ -1,0 +1,22 @@
+{% extends 'base_template.html' %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h2 class="mb-4">Modificar Marca</h2>
+    <form method="POST" action="" class="ml-5">
+       <!-- Token CSRF es una medida de seguridad utilizada para proteger a las aplicaciones web, si no lo pongo no me deja modificar  -->
+       {{ form.hidden_tag() }} 
+      <div class="form-group"> <!--Envuelve cada campo del formulario.-->
+        {{ form.nombre.label(class="form-label") }}<br><!--muestra la etiqueta del campo, con la clase form-label para el estilo.-->
+        {{ form.nombre(class="form-control") }}<br><!--muestra el label-->
+        {% for error in form.nombre.errors %}
+        <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+      </div>
+      <div>
+        {{ form.submit(class="btn btn-primary") }} <!--renderiza el botón de envío del formulario con la clase -->
+      </div>
+      <a href="{{ url_for('marcas') }}" class="btn btn-secondary mt-3">Volver</a> <!--se vuelve-->
+    </form>
+  </div>
+{% endblock %}

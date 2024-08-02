@@ -1,0 +1,36 @@
+{% extends 'base_template.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h4 class="mb-4">Tabla de Fabricantes</h4>
+    <div class="mb-3">
+        <a href="{{ url_for('agregar_fabricante') }}" class="btn btn-danger">Crear Fabricante</a>
+        <a href="{{ url_for('eliminar_fabricante') }}" class="btn btn-danger">Eliminar Fabricante</a>
+    </div>
+    
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>País</th>
+                    <th></th> 
+                </tr>
+            </thead>
+            <tbody>
+                {% for fabricante in fabricantes %}
+                    <tr>
+                        <td>{{ fabricante.id }}</td>
+                        <td>{{ fabricante.nombre }}</td>
+                        <td>{{ fabricante.pais_origen }}</td>
+                        <td>
+                            <a href="{{ url_for('modificar_fabricante', id=fabricante.id) }}" class="btn btn-primary">Modificar</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

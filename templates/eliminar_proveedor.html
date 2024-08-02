@@ -1,0 +1,52 @@
+{% extends 'base_template.html' %}
+
+{% block content %}
+<div class="container">
+    <h3>Eliminar Proveedor</h3>
+
+    <!-- Mostrar errores del formulario si existen -->
+    {% if form.errors %}
+        <div class="alert alert-danger">
+            <ul>
+                {% for field, errors in form.errors.items() %}
+                    {% for error in errors %}
+                        <li>{{ field }}: {{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Teléfono</th>
+                <th>Dirección</th>
+                <th>Correo Electrónico</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for proveedor in proveedores %}
+            <tr>
+                <td>{{ proveedor.id }}</td>
+                <td>{{ proveedor.nombre }}</td>
+                <td>{{ proveedor.telefono }}</td>
+                <td>{{ proveedor.direccion }}</td>
+                <td>{{ proveedor.correo_electronico }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('eliminar_proveedor') }}" style="display:inline;">
+                        {{ form.hidden_tag() }}
+                        <input type="hidden" name="proveedor_id" value="{{ proveedor.id }}">
+                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ url_for('proveedores') }}" class="btn btn-secondary">Volver</a>
+</div>
+{% endblock %}
