@@ -7,7 +7,7 @@ Este proyecto está alojado en GitHub y se puede clonar y correr localmente sigu
 ```bash
 # Clonar el proyecto
 git clone https://github.com/milesivit/EFI-Milena
-cd EFI_Milena
+cd EFI-Milena
 
 # Crear el entorno virtual
 python3 -m venv env
