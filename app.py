@@ -1,20 +1,45 @@
-from flask import Flask, render_template,redirect, url_for, request, flash
+from flask import Flask, render_template,redirect, url_for, request, flash, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+import os 
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/phone.db' #puerto de la db
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
+    'SQLALCHEMY_DATABASE_URI'
+) #esto se conecta al .env
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 #esto sirve para flaskWTF
-app.config['SECRET_KEY'] = 'milena'
+app.config['SECRET_KEY'] = os.environ.get(
+    'SECRET_KEY'
+)
 
 db= SQLAlchemy(app)
 migrate= Migrate(app, db) 
 
-from models import Marca, Proveedor, Modelo, Fabricante, Categoria, Caracteristica, Accesorio, Equipo, Inventario, Cliente
+from dotenv import load_dotenv
+from models import Marca, Proveedor, Modelo, Fabricante, Categoria, Caracteristica, Accesorio, Equipo, Inventario, Cliente, User
 from forms import MarcaForm, ProveedorForm, EmptyForm, FabricanteForm, ModeloForm, CategoriaForm, CaracteristicaForm, AccesorioForm, EquipoForm
+from services.marca_service import MarcaService
+from repositories.marca_repository import MarcaRepository
+
+load_dotenv()
+
+@app.route("/users", methods=['POST'])
+def user():
+    data = request.get_json()
+    username = data.get('nombre_usuario')
+    password = data.get('password')
+
+    try:
+        nuevo_usuario = User(username=username, password=password)
+        db.session.add(nuevo_usuario)
+        db.session.commit()
+
+        return jsonify({"Usuario Creado": username}), 201
+    except:
+        return jsonify({"Error": "Sos burro"})
 #-----------------------------------------------------------------------------------------------------------------
 @app.route("/") #página principal
 def index():
@@ -22,8 +47,11 @@ def index():
 #-----------------------------------------------------------------------------------------------------------------
 @app.route("/marcas")
 def marcas():
-    marcas = Marca.query.filter_by(activo=True).all()  # Filtra solo las marcas activas
+    services = MarcaService()  # No pasar MarcaRepository aquí
+    
+    marcas = services.get_all()  # Llama al método get_all
     return render_template('marcas.html', marcas=marcas)
+
 
 @app.route('/agregar-marcas', methods=['GET', 'POST'])
 def agregar_marcas():
