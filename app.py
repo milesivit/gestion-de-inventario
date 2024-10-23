@@ -3,6 +3,8 @@ from db import db
 
 from flask import Flask, render_template, redirect, url_for, request, flash
 from flask_migrate import Migrate
+from flask_marshmallow import Marshmallow
+
 
 from flask_jwt_extended import (
     JWTManager,
@@ -24,6 +26,7 @@ app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
 db.init_app(app)
 migrate = Migrate(app, db)
 jwt = JWTManager(app)
+ma= Marshmallow(app)
 
 from dotenv import load_dotenv
 from models import (
