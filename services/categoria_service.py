@@ -1,9 +1,9 @@
-from repositories.marca_repository import MarcaRepository
+from repositories.categoria_repository import CategoriaRepository
 
-class MarcaService:
+class CategoriaService:
 
     def __init__(self):
-        self.repository = MarcaRepository()# instancia del repositorio, para no repetirlo a cada rato
+        self.repository = CategoriaRepository()  # Instancia del repositorio
 
     def get_all(self):
         return self.repository.get_all()
