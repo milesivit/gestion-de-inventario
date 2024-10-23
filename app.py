@@ -10,9 +10,8 @@ from flask_jwt_extended import (
 
 app = Flask(__name__)
 
-from views import register_bp
-
-register_bp(app)
+from views import register_bp 
+register_bp(app) #le paso el parametro app
 
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
     "SQLALCHEMY_DATABASE_URI"
