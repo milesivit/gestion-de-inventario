@@ -1,6 +1,7 @@
 import bcrypt
 from datetime import timedelta
 import os 
+from db import db
 
 from flask import Flask, render_template,redirect, url_for, request, flash, jsonify
 from flask_sqlalchemy import SQLAlchemy
@@ -21,6 +22,9 @@ from werkzeug.security import (
 
 app = Flask(__name__)
 
+from views import register_bp
+register_bp(app)
+
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
     'SQLALCHEMY_DATABASE_URI'
 ) #esto se conecta al .env
@@ -31,59 +35,19 @@ app.config['SECRET_KEY'] = os.environ.get(
     'SECRET_KEY'
 )
 
-db= SQLAlchemy(app)
+
+db.init_app(app)
 migrate= Migrate(app, db) 
 jwt= JWTManager(app)
 
 from dotenv import load_dotenv
-from models import Marca, Proveedor, Modelo, Fabricante, Categoria, Caracteristica, Accesorio, Equipo, Inventario, Cliente, User
+from models import Marca, Proveedor, Modelo, Fabricante, Categoria, Caracteristica, Accesorio, Equipo, Inventario, Cliente
 from forms import MarcaForm, ProveedorForm, EmptyForm, FabricanteForm, ModeloForm, CategoriaForm, CaracteristicaForm, AccesorioForm, EquipoForm
 from services.marca_service import MarcaService
 from repositories.marca_repository import MarcaRepository
 
 load_dotenv()
 
-@app.route("/login", methods=['POST'])
-def login():
-    
-    data = request.authorization
-    username = data.username
-    password = data.password
-
-    usuario= User.query.filter_by(username=username).first()
-
-    if usuario and check_password_hash(pwhash=usuario.password_hash, password=password):
-        acces_token= create_access_token(
-            identity=username,
-            expires_delta=timedelta(minutes=3)
-        )
-        return jsonify({"Mensaje": f"Token {acces_token}"})
-    return jsonify({"Mensaje" : "NO MATCH"})
-
-
-@app.route("/users", methods=['GET', 'POST'])
-@jwt_required()
-def user():
-    if request.method == 'POST':
-        data = request.get_json()
-        username = data.get('nombre_usuario')
-        password = data.get('password')
-
-        password_hasheada= generate_password_hash(
-            password=password,
-            method='pbkdf2',
-            salt_length=8,
-        )
-        print(password_hasheada)
-        try:
-            nuevo_usuario = User(username=username, password_hash=password_hasheada)
-            db.session.add(nuevo_usuario)
-            db.session.commit()
-
-            return jsonify({"Usuario Creado": username}), 201
-        except:
-            return jsonify({"Error": "Sos burro"})
-    return jsonify({"Usuario Creado": 'ACA VA EL LISTADO'}), 200
 #-----------------------------------------------------------------------------------------------------------------
 @app.route("/") #página principal
 def index():
