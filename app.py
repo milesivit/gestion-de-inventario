@@ -3,7 +3,7 @@ from db import db
 
 from flask import Flask, render_template, redirect, url_for, request, flash
 from flask_migrate import Migrate
-from flask_marshmallow import Marshmallow
+from flask_cors import CORS
 
 
 from flask_jwt_extended import (
@@ -26,7 +26,8 @@ app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
 db.init_app(app)
 migrate = Migrate(app, db)
 jwt = JWTManager(app)
-ma= Marshmallow(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
+
 
 from dotenv import load_dotenv
 from models import (
@@ -241,7 +242,9 @@ def modificar_modelo(id):
 
     if form.validate_on_submit():
         services.update(
-            id, form.nombre.data, form.fabricante_id.data, form.marca_id.data
+            id, form.nombre.data, 
+            form.fabricante_id.data, 
+            form.marca_id.data,
         )
         return redirect(url_for("modelos"))
 
