@@ -1,7 +1,7 @@
 from db import ma
 from marshmallow import validates, ValidationError, fields
 
-from models import User, Marca, Fabricante, Modelo, Caracteristica
+from models import User, Marca, Fabricante, Modelo, Caracteristica, Categoria, Accesorio, Equipo
     
 class UserSchema(ma.SQLAlchemySchema):
     class Meta:
@@ -78,7 +78,7 @@ class CaracteristicaSchema(ma.SQLAlchemySchema):
     class Meta:
         model = Caracteristica
         
-    
+    id = ma.auto_field()
     modelo_id = ma.auto_field()
     peso = ma.auto_field()
     resolucion_pantalla = ma.auto_field()
@@ -105,4 +105,67 @@ class CaracteristicaMinimalSchema(ma.SQLAlchemySchema):
     descripcion = ma.auto_field()
     lanzamiento = ma.auto_field()
 
+class CategoriaSchema(ma.SQLAlchemySchema):
+    class Meta:
+        model = Categoria
+    
+    id = ma.auto_field()
+    nombre = ma.auto_field()
+    activo = ma.auto_field()
+    
+class CategoriaMinimalSchema(ma.SQLAlchemySchema):
+    class Meta:
+        model = Categoria
+    
+    nombre = ma.auto_field()
 
+class AcessorioSchema(ma.SQLAlchemySchema):
+    class Meta:
+        model = Accesorio
+    
+    id = ma.auto_field()
+    modelo_id = ma.auto_field()
+    cargador = ma.auto_field()
+    auriculares = ma.auto_field()
+    chip = ma.auto_field()
+    funda = ma.auto_field()
+    activo = ma.auto_field()
+    
+    modelo = fields.Nested(ModeloSchema)
+
+class AcessorioMinimalSchema(ma.SQLAlchemySchema):
+    class Meta:
+        model = Accesorio
+    
+    cargador = ma.auto_field()
+    auriculares = ma.auto_field()
+    chip = ma.auto_field()
+    funda = ma.auto_field()
+
+class EquipoSchema(ma.SQLAlchemySchema):
+    class Meta:
+        model = Equipo
+    
+    categoria_id = ma.auto_field()
+    marca_id = ma.auto_field()
+    modelo_id = ma.auto_field()
+    caracteristica_id = ma.auto_field()
+    accesorio_id = ma.auto_field()
+
+    categoria = fields.Nested(CategoriaSchema)
+    marca = fields.Nested(MarcaSchema)
+    modelo = fields.Nested(ModeloSchema)
+    caracteristica = fields.Nested(CaracteristicaSchema)
+    accesorio = fields.Nested(AcessorioSchema)
+ 
+class EquipoMinimalSchema(ma.SQLAlchemySchema):
+    class Meta:
+        model = Equipo
+
+    categoria_id = ma.auto_field()
+    marca_id = ma.auto_field()
+    modelo_id = ma.auto_field()
+    caracteristica_id = ma.auto_field()
+    accesorio_id = ma.auto_field()
+
+    

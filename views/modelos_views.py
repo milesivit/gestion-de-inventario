@@ -30,9 +30,16 @@ def marcas():
 
 #get de fabricante
 @modelo_bp.route('/fabricante', methods=['GET'])
+@jwt_required()
 def fabricantes():
+    additional_data = get_jwt()
+    administrador = additional_data.get('administrador', False)
+
     fabricante = Fabricante.query.all()
-    return FabricanteSchema().dump(fabricante, many=True)
+    if administrador:
+        return FabricanteSchema().dump(fabricante, many=True)
+    else:
+        return FabricanteMinimalSchema().dump(fabricante, many=True)
 
 # CRUD de modelo (GET, POST, PUT, DELETE)
 @modelo_bp.route('/modelo', methods=['GET', 'POST', 'PUT', 'DELETE'])
