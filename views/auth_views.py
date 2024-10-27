@@ -10,7 +10,7 @@ from flask_jwt_extended import (
 )
 
 from werkzeug.security import (
-    generate_password_hash,
+    generate_password_hash, 
     check_password_hash
 )
 
@@ -39,7 +39,7 @@ def login():
                 administrador= usuario.is_admin
             )
         )
-        return jsonify({"Mensaje": f"{acces_token}"})
+        return jsonify({"Token": f"{acces_token}"})
     return jsonify({"Mensaje" : "El usuario y la contraseña no coinciden."})
 
 @auth_bp.route("/users", methods=['GET', 'POST'])
