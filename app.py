@@ -12,8 +12,9 @@ from flask_jwt_extended import (
 
 app = Flask(__name__)
 
-from views import register_bp 
-register_bp(app) #le paso el parametro app
+from views import register_bp
+
+register_bp(app)  # le paso el parametro app
 
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
     "SQLALCHEMY_DATABASE_URI"
@@ -242,8 +243,9 @@ def modificar_modelo(id):
 
     if form.validate_on_submit():
         services.update(
-            id, form.nombre.data, 
-            form.fabricante_id.data, 
+            id,
+            form.nombre.data,
+            form.fabricante_id.data,
             form.marca_id.data,
         )
         return redirect(url_for("modelos"))

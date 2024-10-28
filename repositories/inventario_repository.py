@@ -1,6 +1,7 @@
 from app import db
 from models import Inventario, Modelo, Proveedor
 
+
 class InventarioRepository:
     def get_all(self):
         return Inventario.query.all()
@@ -42,4 +43,6 @@ class InventarioRepository:
         return Modelo.query.filter_by(activo=True).all()  # Obtener modelos activos
 
     def get_proveedores(self):
-        return Proveedor.query.filter_by(activo=True).all()  # Obtener proveedores activos
+        return Proveedor.query.filter_by(
+            activo=True
+        ).all()  # Obtener proveedores activos

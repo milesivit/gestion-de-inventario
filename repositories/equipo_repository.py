@@ -1,6 +1,7 @@
 from app import db
 from models import Equipo
 
+
 class EquipoRepository:
     """
     Clase encargada de manejar las operaciones de base de datos para la entidad Equipo.
@@ -12,7 +13,9 @@ class EquipoRepository:
     def get_by_id(self, id):
         return Equipo.query.get(id)
 
-    def create(self, categoria_id, marca_id, modelo_id, caracteristica_id, accesorio_id):
+    def create(
+        self, categoria_id, marca_id, modelo_id, caracteristica_id, accesorio_id
+    ):
         nuevo_equipo = Equipo(
             categoria_id=categoria_id,
             marca_id=marca_id,

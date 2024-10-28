@@ -1,6 +1,7 @@
 from app import db
 from models import Cliente
 
+
 class ClienteRepository:
     def get_all(self):
         return Cliente.query.all()

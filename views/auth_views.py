@@ -6,53 +6,51 @@ from flask_jwt_extended import (
     get_jwt,
     get_jwt_identity,
     jwt_required,
-    create_access_token
+    create_access_token,
 )
 
-from werkzeug.security import (
-    generate_password_hash, 
-    check_password_hash
-)
+from werkzeug.security import generate_password_hash, check_password_hash
 
 from app import db
 from models import User
 from schemas import UserSchema, UserMinimalSchema
 
 
-auth_bp= Blueprint('auth', __name__)
+auth_bp = Blueprint("auth", __name__)
 
 
-@auth_bp.route("/login", methods=['POST'])
+@auth_bp.route("/login", methods=["POST"])
 def login():
-    
+
     data = request.authorization
     username = data.username
     password = data.password
 
-    usuario= User.query.filter_by(username=username).first()
+    usuario = User.query.filter_by(username=username).first()
 
     if usuario and check_password_hash(pwhash=usuario.password_hash, password=password):
-        acces_token= create_access_token(
+        acces_token = create_access_token(
             identity=username,
             expires_delta=timedelta(minutes=20),
-            additional_claims=dict(
-                administrador= usuario.is_admin
-            )
+            additional_claims=dict(administrador=usuario.is_admin),
         )
         return jsonify({"Token": f"{acces_token}"})
-    return jsonify({"Mensaje" : "El usuario y la contraseña no coinciden."})
+    return jsonify({"Mensaje": "El usuario y la contraseña no coinciden."})
 
-@auth_bp.route("/users", methods=['GET', 'POST'])
+
+@auth_bp.route("/users", methods=["GET", "POST"])
 @jwt_required()
 def user():
     additional_data = get_jwt()
-    administrador = additional_data.get('administrador', False)  # Asignar False por defecto si no está presente
+    administrador = additional_data.get(
+        "administrador", False
+    )  # Asignar False por defecto si no está presente
 
-    if request.method == 'POST':
+    if request.method == "POST":
         if administrador:
             data = request.get_json()
-            username = data.get('nombre_usuario')
-            password = data.get('password')
+            username = data.get("nombre_usuario")
+            password = data.get("password")
 
             # verifica si el usuario ya existe
             si_existe_usuario = User.query.filter_by(username=username).first()
@@ -61,7 +59,7 @@ def user():
 
             password_hasheada = generate_password_hash(
                 password=password,
-                method='pbkdf2',
+                method="pbkdf2",
                 salt_length=8,
             )
             print(password_hasheada)
@@ -72,9 +70,14 @@ def user():
 
                 return jsonify({"Usuario Creado": username}), 201  # Retorno correcto
             except:
-                return jsonify({"Error": "Ocurrió un error al crear usuario."})  # Devuelve el error
+                return jsonify(
+                    {"Error": "Ocurrió un error al crear usuario."}
+                )  # Devuelve el error
 
-        return jsonify({"Mensaje": "UD no está habilitado para crear un usuario."}), 403  # Código de estado adecuado
+        return (
+            jsonify({"Mensaje": "UD no está habilitado para crear un usuario."}),
+            403,
+        )  # Código de estado adecuado
 
     # Para GET
     usuarios = User.query.all()
@@ -82,4 +85,3 @@ def user():
         return jsonify(UserSchema().dump(obj=usuarios, many=True))
     else:
         return jsonify(UserMinimalSchema().dump(obj=usuarios, many=True))
-

@@ -1,13 +1,16 @@
 from app import db
 from models import Accesorio
 
+
 class AccesorioRepository:
     """
     Clase encargada de manejar las operaciones de base de datos para la entidad Accesorio.
     """
 
     def get_active(self):
-        return Accesorio.query.filter_by(activo=True).all()  # Filtra solo los accesorios activos
+        return Accesorio.query.filter_by(
+            activo=True
+        ).all()  # Filtra solo los accesorios activos
 
     def get_by_id(self, id):
         return Accesorio.query.get(id)
@@ -22,7 +25,7 @@ class AccesorioRepository:
             auriculares=auriculares,
             chip=chip,
             funda=funda,
-            activo=activo
+            activo=activo,
         )
         db.session.add(nuevo_accesorio)
         db.session.commit()

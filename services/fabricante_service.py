@@ -1,5 +1,6 @@
 from repositories.fabricante_repository import FabricanteRepository
 
+
 class FabricanteService:
     """
     Clase que encapsula la lógica de negocio relacionada con los fabricantes.

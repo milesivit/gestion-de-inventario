@@ -4,6 +4,7 @@ from .caracteristica_views import caracteristica_bp
 from .equipo_views import equipo_bp
 from .inventario_views import inventario_bp
 
+
 def register_bp(app):
     app.register_blueprint(auth_bp)
     app.register_blueprint(modelo_bp)

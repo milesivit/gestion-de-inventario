@@ -1,5 +1,6 @@
 from repositories.inventario_repository import InventarioRepository
 
+
 class InventarioService:
     def __init__(self):
         self.repository = InventarioRepository()  # Instanciar el repositorio
@@ -23,4 +24,6 @@ class InventarioService:
         return self.repository.get_modelos()  # Método para obtener modelos activos
 
     def get_proveedores(self):
-        return self.repository.get_proveedores()  # Método para obtener proveedores activos
+        return (
+            self.repository.get_proveedores()
+        )  # Método para obtener proveedores activos

@@ -35,7 +35,7 @@ class Modelo(db.Model):
         db.Integer, db.ForeignKey("marca.id"), nullable=False
     )  # Añadido aquí
     activo = db.Column(db.Boolean, default=True)  # Añade el atributo activo
-    
+
     caracteristicas = db.relationship("Caracteristica", back_populates="modelo")
     accesorios = db.relationship("Accesorio", back_populates="modelo")
 

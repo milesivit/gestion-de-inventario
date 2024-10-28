@@ -1,6 +1,7 @@
 from app import db
 from models import Caracteristica
 
+
 class CaracteristicaRepository:
     """
     Clase encargada de manejar las operaciones de base de datos para la entidad Caracteristica.
@@ -8,14 +9,27 @@ class CaracteristicaRepository:
 
     def get_all(self):
         return Caracteristica.query.all()
-    
+
     def get_active(self):
-        return Caracteristica.query.filter_by(activo=True).all()  # Filtra solo las características activas
-    
+        return Caracteristica.query.filter_by(
+            activo=True
+        ).all()  # Filtra solo las características activas
+
     def get_by_id(self, id):
         return Caracteristica.query.get(id)
-    
-    def create(self, modelo_id, peso, resolucion_pantalla, capacidad_bateria, sistema_operativo, precio_lista, camara, descripcion, lanzamiento):
+
+    def create(
+        self,
+        modelo_id,
+        peso,
+        resolucion_pantalla,
+        capacidad_bateria,
+        sistema_operativo,
+        precio_lista,
+        camara,
+        descripcion,
+        lanzamiento,
+    ):
         nueva_caracteristica = Caracteristica(
             modelo_id=modelo_id,
             peso=peso,
@@ -26,12 +40,12 @@ class CaracteristicaRepository:
             camara=camara,
             descripcion=descripcion,
             lanzamiento=lanzamiento,
-            activo=True
+            activo=True,
         )
         db.session.add(nueva_caracteristica)
         db.session.commit()
         return nueva_caracteristica
-    
+
     def hide_by_id(self, id):
         caracteristica = Caracteristica.query.get(id)
         if caracteristica:
@@ -39,8 +53,20 @@ class CaracteristicaRepository:
             db.session.commit()
             return True
         return False
-    
-    def update(self, id, modelo_id, peso, resolucion_pantalla, capacidad_bateria, sistema_operativo, precio_lista, camara, descripcion, lanzamiento):
+
+    def update(
+        self,
+        id,
+        modelo_id,
+        peso,
+        resolucion_pantalla,
+        capacidad_bateria,
+        sistema_operativo,
+        precio_lista,
+        camara,
+        descripcion,
+        lanzamiento,
+    ):
         caracteristica = Caracteristica.query.get(id)
         if caracteristica:
             caracteristica.modelo_id = modelo_id

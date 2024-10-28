@@ -1,5 +1,6 @@
 from repositories.cliente_repository import ClienteRepository
 
+
 class ClienteService:
     def __init__(self):
         self.repository = ClienteRepository()  # Instanciar el repositorio

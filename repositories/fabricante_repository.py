@@ -1,6 +1,7 @@
 from app import db
 from models import Fabricante
 
+
 class FabricanteRepository:
     """
     Clase que maneja las operaciones de base de datos para la entidad Fabricante.
@@ -10,7 +11,9 @@ class FabricanteRepository:
         return Fabricante.query.all()
 
     def get_active(self):
-        return Fabricante.query.filter_by(activo=True).all()  # Solo los fabricantes activos
+        return Fabricante.query.filter_by(
+            activo=True
+        ).all()  # Solo los fabricantes activos
 
     def get_by_id(self, id):
         return Fabricante.query.get(id)

@@ -1,5 +1,6 @@
 from repositories.accesorio_repository import AccesorioRepository
 
+
 class AccesorioService:
 
     def __init__(self):
@@ -15,7 +16,9 @@ class AccesorioService:
         return self.repository.exists_for_modelo(modelo_id)
 
     def create(self, modelo_id, cargador, auriculares, chip, funda, activo):
-        return self.repository.create(modelo_id, cargador, auriculares, chip, funda, activo)
+        return self.repository.create(
+            modelo_id, cargador, auriculares, chip, funda, activo
+        )
 
     def update(self, id, modelo_id, cargador, auriculares, chip, funda):
         return self.repository.update(id, modelo_id, cargador, auriculares, chip, funda)

@@ -1,5 +1,6 @@
 from repositories.modelo_repository import ModeloRepository
 
+
 class ModeloService:
     """
     Clase que encapsula la lógica de negocio relacionada con los modelos.

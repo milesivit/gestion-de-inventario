@@ -1,5 +1,15 @@
 from app import db
-from models import Marca, Categoria, Modelo, Proveedor, Accesorio, Fabricante, Caracteristica, Equipo
+from models import (
+    Marca,
+    Categoria,
+    Modelo,
+    Proveedor,
+    Accesorio,
+    Fabricante,
+    Caracteristica,
+    Equipo,
+)
+
 
 class RestaurarService:
     def restaurar_entidad(self, modelo, entidad_id):
