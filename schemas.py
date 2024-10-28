@@ -1,7 +1,7 @@
 from db import ma
 from marshmallow import validates, ValidationError, fields
 
-from models import User, Marca, Fabricante, Modelo, Caracteristica, Categoria, Accesorio, Equipo
+from models import User, Marca, Fabricante, Modelo, Caracteristica, Categoria, Accesorio, Equipo, Proveedor, Cliente, Inventario
     
 class UserSchema(ma.SQLAlchemySchema):
     class Meta:
@@ -168,4 +168,58 @@ class EquipoMinimalSchema(ma.SQLAlchemySchema):
     caracteristica_id = ma.auto_field()
     accesorio_id = ma.auto_field()
 
+class ProveedorSchema(ma.SQLAlchemySchema):
+    class Meta:
+        model = Proveedor
+
+    id = ma.auto_field()
+    nombre = ma.auto_field()
+    telefono = ma.auto_field()
+    direccion = ma.auto_field()
+    correo_electronico = ma.auto_field()
+    activo = ma.auto_field()
     
+class ProveedorMinimalSchema(ma.SQLAlchemySchema):
+    class Meta:
+        model = Proveedor
+
+    nombre = ma.auto_field()
+    correo_electronico = ma.auto_field()
+
+class InventarioSchema(ma.SQLAlchemySchema):
+    class Meta:
+        model = Inventario
+
+    id = ma.auto_field()
+    nombre = ma.auto_field()
+    proveedor_id = ma.auto_field()
+    cantidad = ma.auto_field()
+    fecha= ma.auto_field()
+    
+    proveedor= fields.Nested(ProveedorSchema)
+
+class InventarioMinimalSchema(ma.SQLAlchemySchema):
+    class Meta:
+        model = Inventario
+
+    nombre = ma.auto_field()
+    proveedor_id = ma.auto_field()
+    cantidad = ma.auto_field()
+
+class ClienteSchema(ma.SQLAlchemySchema):
+    class Meta:
+        model = Cliente
+
+    id = ma.auto_field()
+    nombre = ma.auto_field()
+    dni = ma.auto_field()
+    inventario_id = ma.auto_field()
+    fecha= ma.auto_field()
+
+    inventario= fields.Nested(InventarioSchema)
+
+class ClienteMinimalSchema(ma.SQLAlchemySchema):
+    class Meta:
+        model = Cliente
+
+    nombre = ma.auto_field()
