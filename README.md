@@ -93,7 +93,7 @@ Ejemplo de respuesta si no sos admin:
   }
 ```
 
-### CRUD en modelo
+### CRUD en modelo de celulares
 
 ### Ver modelos
 - Método: GET
