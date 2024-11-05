@@ -20,3 +20,13 @@ pip install -r requirements.txt
 
 # Correr el proyecto
 flask run --reload
+
+A continuación se describen los principales endpoint de la API con ejemplos de solicitud y respuesta
+
+#Autenticación
+#NECESITAS HACER UN USUARIO ADMIN CON FLASK SHELL
+
+Obtener token de autenticación:
+
+Método: POST
+Endpoint: localhost:5000/login
