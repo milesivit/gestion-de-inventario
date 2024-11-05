@@ -20,13 +20,135 @@ pip install -r requirements.txt
 
 # Correr el proyecto
 flask run --reload
+```
 
-A continuación se describen los principales endpoint de la API con ejemplos de solicitud y respuesta
+# Endpoints de la API
 
-#Autenticación
-#NECESITAS HACER UN USUARIO ADMIN CON FLASK SHELL
+A continuación se describen los principales endpoints de la API con ejemplos de solicitud y respuesta.
 
-Obtener token de autenticación:
+## Autenticación
+### ATENCIÓN CREAR USUARIO ADMINISTRADOR CON FLASK SHELL
 
-Método: POST
-Endpoint: localhost:5000/login
+Obtener token de autenticación
+- Método: POST
+- Endpoint: `localhost:5000/login`
+- Cuerpo de la solicitud en el auth/basic:
+
+```bash
+{
+    "username": "Admin",
+    "password": "admin"
+}
+```
+
+Ejemplo de respuesta:
+
+```bash
+{
+    "Token": "<tu_token_de_autenticacion>"
+}
+```
+
+### Creación de usuarios 
+- Método: POST
+- Endpoint: `localhost:5000/users`
+- Pegar token de administrador en bearer.
+- Cuerpo de la solicitud en el body/json:
+
+```bash
+{
+    "nombre_usuario": "Matias",
+    "password": "matiiii"
+}
+```
+Ejemplo de respuesta:
+
+```bash
+{
+  "Usuario Creado": "Matias"
+}
+```
+
+### Ver lista de usuarios
+- Método: GET
+- Endpoint: `localhost:5000/users`
+- Pegar token de administrador en auth/bearer.
+- Pegar token de usuario en auth/bearer pero tendras limitaciones al no ser admin.
+
+Ejemplo de respuesta si sos admin:
+
+```bash
+  {
+    "id": 10,
+    "is_admin": null,
+    "password_hash": "pbkdf2:sha256:600000$8aTB3wMS$70c0174c4ec2b496d07734c070ad3dcb512c7f0d7274f8ee944e01715fc3bb9d",
+    "username": "Milena"
+  }
+```
+Ejemplo de respuesta si no sos admin:
+
+```bash
+{
+    "username": "usuario 2"
+  }
+```
+
+### CRUD en modelo
+
+### Ver modelos
+- Método: GET
+- Endpoint: `localhost:5000/modelo`
+- Pegar token de administrador en auth/bearer.
+- Pegar token de usuario en auth/bearer pero tendras limitaciones al no ser admin.
+
+### Crear modelos
+- Método: POST
+- SOLO USUARIO ADMIN
+- Tiene que haber creado si o si un fabricante en la DB.
+- Endpoint: `localhost:5000/modelo`
+- Pegar token en bearer.
+- Cuerpo de la solicitud en el body/json:
+
+```bash
+{
+    "nombre": "iPhone 15",
+    "activo": true,
+    "marca_id": 1,
+    "fabricante_id": 1
+}
+```
+
+### Modificar modelos
+- Método: PUT
+- SOLO USUARIO ADMIN
+- Tiene que haber creado si o si un fabricante en la DB.
+- Endpoint: `localhost:5000/modelo`
+- Pegar token en bearer.
+- Cuerpo de la solicitud en el body/json:
+
+```bash
+{
+  "id": 1,
+  "nombre": "Nuevo Nombre del Modelo",
+  "activo": true,
+  "marca_id": 2,
+  "fabricante_id": 3
+ }
+```
+
+### Eliminar modelos
+- Método: DELETE
+- SOLO USUARIO ADMIN
+- SE INACTIVA EL ID COPIANDO ESTA URL Y PONIENDO EL NUMERO DE ID QUE DESEAMOS DESACTIVAR.
+- Endpoint: `http://localhost:5000/modelo?id=1`
+- Pegar token en bearer.
+
+Ejemplo de respuesta:
+```bash
+{
+  "Mensaje": "Modelo marcado como inactivo correctamente."
+}
+```
+
+
+
