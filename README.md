@@ -150,5 +150,14 @@ Ejemplo de respuesta:
 }
 ```
 
-
-
+### Demas vistas
+- Método: GET
+- Endpoint: `localhost:5000/caracteristica`
+- Endpoint: `localhost:5000/accesorio`
+- Endpoint: `localhost:5000/categorias`
+- Endpoint: `localhost:5000/equipos`
+- Endpoint: `localhost:5000/proveedor`
+- Endpoint: `localhost:5000/clientes`
+- Endpoint: `localhost:5000/inventario`
+- Endpoint: `localhost:5000/marca`
+- Endpoint: `localhost:5000/fabricante`
