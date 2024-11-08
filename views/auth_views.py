@@ -116,14 +116,18 @@ def update_user(id):
         if "password" in data:
             new_password = data.get("password")
             usuario.password_hash = generate_password_hash(new_password, method="pbkdf2", salt_length=8)
+        if "is_admin" in data:
+            usuario.is_admin = data.get("is_admin", False)
 
         try:
             db.session.commit()
             return jsonify({"Mensaje": "Usuario actualizado correctamente."}), 200
         except:
+            db.session.rollback()
             return jsonify({"Error": "Ocurrió un error al actualizar el usuario."}), 500
 
-    return jsonify({"Mensaje": "UD no está habilitado para actualizar un usuario."}), 403
+    return jsonify({"Mensaje": "Usted no está habilitado para actualizar un usuario."}), 403
+
 
 
 # Ruta para eliminar un usuario específico (DELETE)
