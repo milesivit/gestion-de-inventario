@@ -164,12 +164,26 @@ def inventarios():
     else:
         return InventarioMinimalSchema().dump(inventario, many=True)
 
-# Ruta para obtener todas las marcas
-@equipo_bp.route("/marca", methods=["GET"])
+# Ruta para obtener todas las marcas (GET), agregar una nueva marca (POST)
+@equipo_bp.route("/marca", methods=["GET", "POST"])
 @jwt_required()  # Requiere autenticación mediante un token JWT
 def marcas():
     additional_data = get_jwt()
     administrador = additional_data.get("administrador", False)
+
+    # Crear una nueva marca en la base de datos
+    if request.method == "POST":
+        if administrador:  # Solo los administradores pueden crear una marca
+            data = request.get_json()
+            nueva_marca = Marca(
+                nombre=data.get("nombre"),
+                activo=data.get("activo", True)  # Activo por defecto es True
+            )
+
+            db.session.add(nueva_marca)
+            db.session.commit()
+            return make_response(MarcaSchema().dump(nueva_marca), 201)
+        return jsonify({"Mensaje": "Ud no está habilitado para crear una marca."}), 403
 
     # Consulta todos los registros de la tabla Marca
     marcas = Marca.query.all()
@@ -179,6 +193,37 @@ def marcas():
     # Si no es administrador, usa el esquema mínimo con menos detalles
     else:
         return MarcaMinimalSchema().dump(marcas, many=True)
+
+# Ruta para actualizar o eliminar una marca específica (PUT, DELETE)
+@equipo_bp.route("/marca/<int:id>", methods=["PUT", "DELETE"])
+@jwt_required()  # Requiere autenticación mediante un token JWT
+def actualizar_marca(id):
+    additional_data = get_jwt()
+    administrador = additional_data.get("administrador", False)
+
+    if not administrador:  # Solo los administradores pueden modificar o eliminar marcas
+        return jsonify({"Mensaje": "Usted no está habilitado para modificar o eliminar esta marca."}), 403
+
+    # Obtener la marca por su ID
+    marca = Marca.query.get(id)
+    if not marca:
+        return jsonify({"Mensaje": "Marca no encontrada"}), 404
+
+    # Si el método es DELETE, eliminar la marca permanentemente
+    if request.method == "DELETE":
+        db.session.delete(marca)
+        db.session.commit()
+        return jsonify({"Mensaje": "Marca eliminada permanentemente"}), 200
+
+    # Si el método es PUT, actualizar los campos de la marca
+    if request.method == "PUT":
+        data = request.get_json()
+        marca.nombre = data.get("nombre", marca.nombre)  # Si no se pasa un nuevo nombre, se mantiene el actual
+        marca.activo = data.get("activo", marca.activo)  # Si no se pasa un nuevo estado, se mantiene el actual
+
+        db.session.commit()
+        return make_response(MarcaSchema().dump(marca), 200)
+
 
 
 # Ruta para obtener todos los fabricantes

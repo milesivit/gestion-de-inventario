@@ -44,6 +44,11 @@ def user():
         "administrador", False
     )  # Asigna False por defecto si no está presente
 
+# en thunderclient se pone esto:
+#{
+#  "nombre_usuario": "nuevo_usuario",
+#  "password": "contraseña_segura"
+#}
     # Si el método es POST, intenta crear un nuevo usuario
     if request.method == "POST":
         if administrador:  # Verifica si el usuario autenticado es administrador
@@ -73,16 +78,68 @@ def user():
                 return jsonify({"Usuario Creado": username}), 201  # Retorno correcto si el usuario se crea con éxito
             except:
                 return jsonify({"Error": "Ocurrió un error al crear usuario."})  # Devuelve un error si ocurre un problema
+            
 
         # Si no es administrador, devuelve un mensaje de no autorizado con código 403
         return (
             jsonify({"Mensaje": "UD no está habilitado para crear un usuario."}),
             403,
         )
-
+    
     # Si el método es GET, obtiene y devuelve una lista de usuarios
     usuarios = User.query.all()  # Consulta todos los usuarios
     if administrador:
         return jsonify(UserSchema().dump(obj=usuarios, many=True))  # Si es admin, muestra todos los datos de usuario
     else:
         return jsonify(UserMinimalSchema().dump(obj=usuarios, many=True))  # Si no es admin, muestra datos mínimos
+
+
+#http://127.0.0.1:5000/users/<id>
+#{
+#  "nombre_usuario": "usuario_actualizado",
+#  "password": "nueva_contraseña"
+#}
+# Ruta para actualizar un usuario específico (PUT)
+@auth_bp.route("/users/<int:id>", methods=["PUT"])
+@jwt_required()
+def update_user(id):
+    additional_data = get_jwt()
+    administrador = additional_data.get("administrador", False)
+
+    if administrador:
+        data = request.get_json()
+        usuario = User.query.get_or_404(id)
+
+        # Actualiza los campos del usuario
+        if "nombre_usuario" in data:
+            usuario.username = data.get("nombre_usuario")
+        if "password" in data:
+            new_password = data.get("password")
+            usuario.password_hash = generate_password_hash(new_password, method="pbkdf2", salt_length=8)
+
+        try:
+            db.session.commit()
+            return jsonify({"Mensaje": "Usuario actualizado correctamente."}), 200
+        except:
+            return jsonify({"Error": "Ocurrió un error al actualizar el usuario."}), 500
+
+    return jsonify({"Mensaje": "UD no está habilitado para actualizar un usuario."}), 403
+
+
+# Ruta para eliminar un usuario específico (DELETE)
+@auth_bp.route("/users/<int:id>", methods=["DELETE"])
+@jwt_required()
+def delete_user(id):
+    additional_data = get_jwt()
+    administrador = additional_data.get("administrador", False)
+
+    if administrador:
+        usuario = User.query.get_or_404(id)
+        try:
+            db.session.delete(usuario)
+            db.session.commit()
+            return jsonify({"Mensaje": "Usuario eliminado correctamente."}), 200
+        except:
+            return jsonify({"Error": "Ocurrió un error al eliminar el usuario."}), 500
+
+    return jsonify({"Mensaje": "UD no está habilitado para eliminar un usuario."}), 403
